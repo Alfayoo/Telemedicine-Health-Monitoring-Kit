@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Portal - Login & Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Background video */
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Apply Times New Roman font to form */
+    body, input, select, button, label, h2 {
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    /* Use sky blue for accents */
+    h2 {
+      color: skyblue;
+    }
+
+    .btn-sky {
+      background-color: skyblue;
+      color: white;
+    }
+
+    .logo{
+    width: 300px;
+    height:auto;
+    margin:0 auto 1rem;
+    display:block;
+  }
+
+    .btn-sky:hover {
+      background-color: #0ea5e9; /* darker skyblue */
+    }
+  </style>
+
+  <link rel="icon" href="favicon.png" type="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png">
+
+</head>
+<body class="relative min-h-screen overflow-hidden">
+
+  <!-- Background Video (Should NOT push content) -->
+  <video autoplay muted loop playsinline id="bgVideo">
+    <source src="Flying_over_and_through_large_clouds(1080p) (1).mp4" type="video/mp4" />
+  </video>
+
+  <!-- Foreground Content (Centered Form) -->
+<div class="absolute inset-0 flex items-center justify-center p-4 z-10">
+  <div class="w-full max-w-xl p-8 rounded-2xl shadow-lg"
+       style="background-color: rgba(255, 255, 255, 0.08); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(50px);">
+    
+    <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">WELCOME TO</h2>
+
+    <!-- Logo image -->
+    <img src="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png"
+         alt="logo" class="logo">
+
+    
+    <!-- LOGIN FORM -->
+<div id="loginForm">
+  <!-- Role Toggle Buttons -->
+  <div class="flex justify-center gap-4 mb-4">
+    <button type="button" onclick="selectLogin('patient')" id="patientBtn"
+      class="bg-blue-600 text-white px-4 py-2 rounded-lg">Patient</button>
+    <button type="button" onclick="selectLogin('doctor')" id="doctorBtn"
+      class="bg-gray-300 text-black px-4 py-2 rounded-lg">Doctor</button>
+  </div>
+
+  <form onsubmit="handleLogin(event)">
+    <!-- Hidden Role Field -->
+    <input type="hidden" id="loginType" value="patient">
+
+    <div class="mb-4">
+      <label class="block text-black-700">Email</label>
+      <input type="email" class="w-full border rounded-lg px-4 py-2" required>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-black-700">Password</label>
+      <input type="password" class="w-full border rounded-lg px-4 py-2" required>
+    </div>
+
+    <div class="text-right mb-4 text-sm text-blue-600 hover:underline cursor-pointer">Forgot Password?</div>
+
+    <button type="submit"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
+      Login
+    </button>
+
+    <div class="mt-4 text-center text-sm text-black-600">
+      Don't have an account?
+      <span class="text-blue-600 cursor-pointer hover:underline" onclick="toggleForms()">Create Account</span>
+    </div>
+  </form>
+</div>
+
+
+<!-- REGISTRATION FORM -->
+<div id="registerForm" class="hidden">
+  <div style="max-height: 40vh; overflow-y: auto; padding-top: 1rem; padding-bottom: 1rem;">
+    <form>
+      <!-- Role Selection -->
+      <div class="mb-4">
+        <label class="block text-black-700">Registering as:</label>
+        <select id="userRole" class="w-full border rounded-lg px-4 py-2" required>
+          <option value="">-- Select Role --</option>
+          <option value="patient">Patient</option>
+          <option value="doctor">Doctor</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-black-700">Full Name</label>
+        <input type="text" class="w-full border rounded-lg px-4 py-2" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-black-700">Email</label>
+        <input type="email" class="w-full border rounded-lg px-4 py-2" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-black-700">County</label>
+        <select id="countySelect" onchange="updateConstituencies()" class="w-full border rounded-lg px-4 py-2" required>
+          <option value="">-- Select County --</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-black-700">Constituency</label>
+        <select id="constituencySelect" class="w-full border rounded-lg px-4 py-2" required>
+          <option value="">-- Select Constituency --</option>
+        </select>
+      </div>
+
+    <div class="mb-4">
+        <label class="block text-black-700">Date of Birth</label>
+        <input type="date" class="w-full border rounded-lg px-4 py-2" required>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-black-700 mb-1">Gender</label>
+        <div class="flex gap-4">
+          <label><input type="radio" name="gender" value="Male" required class="mr-2"> Male</label>
+          <label><input type="radio" name="gender" value="Female" class="mr-2"> Female</label>
+          <label><input type="radio" name="gender" value="Other" class="mr-2"> Other</label>
+        </div>
+      </div>
+
+      <!-- Doctor-only Fields -->
+      <div id="doctorFields" class="hidden">
+        <div class="mb-4">
+          <label class="block text-black-700">Hospital/Clinic Name</label>
+          <input type="text" class="w-full border rounded-lg px-4 py-2">
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-black-700">Specialization</label>
+          <input type="text" class="w-full border rounded-lg px-4 py-2">
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-black-700">License Number</label>
+          <input type="text" class="w-full border rounded-lg px-4 py-2">
+        </div>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
+        Submit
+      </button>
+
+         <div class="mt-4 text-center text-sm text-black-600">
+        Already have an account?
+        <span class="text-blue-600 cursor-pointer hover:underline" onclick="toggleForms()">Login</span>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+  <script>
+    // Toggle between login and registration
+    function toggleForms() {
+      document.getElementById("loginForm").classList.toggle("hidden");
+      document.getElementById("registerForm").classList.toggle("hidden");
+    }
+
+    // Constituency data per county
+    const constituenciesByCounty = {
+       "Baringo": ["Baringo Central", "Baringo North", "Baringo South", "Eldama Ravine", "Mogotio", "Tiaty"],
+      "Bomet": ["Bomet Central", "Bomet East", "Chepalungu", "Konoin", "Sotik"],
+      "Bungoma": ["Bumula", "Kabuchai", "Kanduyi", "Kimilili", "Mt. Elgon", "Sirisia", "Tongaren", "Webuye East", "Webuye West"],
+      "Busia": ["Budalangi", "Butula", "Funyula", "Matayos", "Nambale", "Teso North", "Teso South"],
+      "Elgeyo-Marakwet": ["Keiyo North", "Keiyo South", "Marakwet East", "Marakwet West"],
+      "Embu": ["Manyatta", "Mbeere North", "Mbeere South", "Runyenjes"],
+      "Garissa": ["Balambala", "Dadaab", "Fafi", "Garissa Township", "Ijara", "Lagdera"],
+      "Homa Bay": ["Homa Bay Town", "Kabondo Kasipul", "Karachuonyo", "Kasipul", "Mbita", "Ndhiwa", "Rangwe", "Suba North", "Suba South"],
+      "Isiolo": ["Isiolo North", "Isiolo South"],
+      "Kajiado": ["Kajiado Central", "Kajiado East", "Kajiado North", "Kajiado South", "Kajiado West"],
+      "Kakamega": ["Butere", "Ikolomani", "Khwisero", "Lurambi", "Lugari", "Malava", "Matungu", "Mumias East", "Mumias West", "Navakholo", "Shinyalu"],
+      "Kericho": ["Ainamoi", "Belgut", "Bureti", "Kipkelion East", "Kipkelion West", "Sigowet/Soin"],
+      "Kiambu": ["Gatundu North", "Gatundu South", "Githunguri", "Juja", "Kabete", "Kiambaa", "Kiambu", "Kikuyu", "Limuru", "Lari", "Ruiru", "Thika Town"],
+      "Kilifi": ["Bahari", "Ganze", "Kaloleni", "Kilifi North", "Kilifi South", "Magarini", "Malindi", "Rabai"],
+      "Kirinyaga": ["Gichugu", "Kirinyaga Central", "Mwea", "Ndia"],
+      "Kisii": ["Bobasi", "Bomachoge Borabu", "Bomachoge Chache", "Bonchari", "Kitutu Chache North", "Kitutu Chache South", "Nyaribari Chache", "Nyaribari Masaba", "South Mugirango"],
+      "Kisumu": ["Kisumu Central", "Kisumu East", "Kisumu West", "Muhoroni", "Nyakach", "Nyando", "Seme"],
+ "Kitui": ["Kitui Central", "Kitui East", "Kitui Rural", "Kitui South", "Kitui West", "Mbooni", "Mwingi Central", "Mwingi North", "Mwingi West"],
+      "Kwale": ["Kinango", "Lunga Lunga", "Matuga", "Msambweni"],
+      "Laikipia": ["Laikipia East", "Laikipia North", "Laikipia West"],
+      "Lamu": ["Lamu East", "Lamu West"],
+      "Machakos": ["Kangundo", "Kathiani", "Machakos Town", "Masinga", "Matungulu", "Mavoko", "Mwala", "Yatta"],
+      "Makueni": ["Kaiti", "Kibwezi East", "Kibwezi West", "Kilome", "Makueni", "Mbooni"],
+      "Mandera": ["Banissa", "Lafey", "Mandera East", "Mandera North", "Mandera South", "Mandera West"],
+      "Marsabit": ["Laisamis", "Moyale", "North Horr", "Saku"],
+      "Meru": ["Buuri", "Central Imenti", "Igembe Central", "Igembe North", "Igembe South", "North Imenti", "South Imenti", "Tigania East", "Tigania West"],
+      "Migori": ["Awendo", "Kuria East", "Kuria West", "Migori", "Nyatike", "Rongo", "Suna East", "Suna West", "Uriri"],
+      "Mombasa": ["Changamwe", "Jomvu", "Kisauni", "Likoni", "Mvita", "Nyali"],
+      "Murang'a": ["Gatanga", "Kandara", "Kangema", "Kiharu", "Kigumo", "Maragua", "Mathioya"],
+      "Nairobi": ["Dagoretti North", "Dagoretti South", "Embakasi Central", "Embakasi East", "Embakasi North", "Embakasi South", "Embakasi West", "Kamukunji", "Kasarani", "Kibra", "Lang'ata", "Makadara", "Roysambu", "Ruaraka", "Starehe", "Westlands"],
+      "Nakuru": ["Bahati", "Gilgil", "Kuresoi North", "Kuresoi South", "Molo", "Naivasha", "Nakuru Town East", "Nakuru Town West", "Njoro", "Rongai", "Subukia"],
+      "Nandi": ["Aldai", "Chesumei", "Emgwen", "Mosop", "Nandi Hills", "Tinderet"],
+      "Narok": ["Emurua Dikirr", "Kilgoris", "Narok East", "Narok North", "Narok South", "Narok West"],
+      "Nyamira": ["Borabu", "Kitutu Masaba", "North Mugirango", "West Mugirango"],
+      "Nyandarua": ["Kinangop", "Kipipiri", "Ndaragwa", "Ol Jorok", "Ol Kalou"],
+      "Nyeri": ["Kieni", "Mathira", "Mukurweini", "Nyeri Town", "Othaya", "Tetu"],
+      "Samburu": ["Samburu East", "Samburu North", "Samburu West"],
+      "Siaya": ["Alego Usonga", "Bondo", "Gem", "Rarieda", "Ugenya", "Ugunja"],
+      "Taita Taveta": ["Mwatate", "Voi", "Wundanyi"],
+      "Tana River": ["Bura", "Garsen", "Galole"],
+      "Tharaka-Nithi": ["Chuka/Igambang'ombe", "Maara", "Tharaka"],
+      "Trans Nzoia": ["Cherangany", "Endebess", "Kwanza", "Saboti", "Kiminini"],
+      "Turkana": ["Loima", "Turkana Central", "Turkana East", "Turkana North", "Turkana South", "Turkana West"],
+      "Uasin Gishu": ["Ainabkoi", "Kapseret", "Kesses", "Moiben", "Soy", "Turbo"],
+      "Vihiga": ["Emuhaya", "Hamisi", "Luanda", "Sabatia", "Vihiga"],
+"Wajir": ["Eldas", "Tarbaj", "Wajir East", "Wajir North", "Wajir South", "Wajir West"],
+      "West Pokot": ["Kapenguria", "Kacheliba", "Pokot South", "Sigor"]
+
+    };
+
+    const countySelect = document.getElementById('countySelect');
+    const constituencySelect = document.getElementById('constituencySelect');
+
+    // Populate counties
+    for (const county in constituenciesByCounty) {
+      const option = document.createElement("option");
+      option.value = county;
+      option.textContent = county;
+      countySelect.appendChild(option);
+    }
+
+    function selectLogin(type) {
+    document.getElementById('loginType').value = type;
+
+    const patientBtn = document.getElementById('patientBtn');
+    const doctorBtn = document.getElementById('doctorBtn');
+
+    if (type === 'patient') {
+      patientBtn.classList.add('bg-blue-600', 'text-white');
+      patientBtn.classList.remove('bg-gray-300', 'text-black');
+      doctorBtn.classList.add('bg-gray-300', 'text-black');
+      doctorBtn.classList.remove('bg-blue-600', 'text-white');
+    } else {
+      doctorBtn.classList.add('bg-blue-600', 'text-white');
+      doctorBtn.classList.remove('bg-gray-300', 'text-black');
+      patientBtn.classList.add('bg-gray-300', 'text-black');
+      patientBtn.classList.remove('bg-blue-600', 'text-white');
+    }
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    const loginType = document.getElementById('loginType').value;
+    if (loginType === 'doctor') {
+      window.location.href = 'doctor-dashboard.html';
+    } else {
+      window.location.href = 'dashboard.html';
+    }
+  }
+
+   // Show Doctor Fields if selected
+  const userRole = document.getElementById("userRole");
+  const doctorFields = document.getElementById("doctorFields");
+
+  userRole.addEventListener("change", () => {
+    doctorFields.classList.toggle("hidden", userRole.value !== "doctor");
+  });
+
+
+
+    // Update constituencies based on county
+    function updateConstituencies() {
+      const selectedCounty = countySelect.value;
+      constituencySelect.innerHTML = '<option value="">-- Select Constituency --</option>';
+      if (selectedCounty && constituenciesByCounty[selectedCounty]) {
+        constituenciesByCounty[selectedCounty].forEach(constituency => {
+          const opt = document.createElement("option");
+          opt.value = constituency;
+          opt.textContent = constituency;
+          constituencySelect.appendChild(opt);
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
