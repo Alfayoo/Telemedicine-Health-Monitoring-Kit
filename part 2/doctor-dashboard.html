@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif !important;
+    }
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="fixed inset-0 w-full h-full object-cover z-0">
+    <source src="Untitled video - Made with Clipchamp.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Main Glassmorphic Container -->
+  <div class="flex w-full max-w-[1300px] h-[600px] border border-white/30 shadow-xl rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm z-10 relative text-black">
+    
+    <!-- Left Panel -->
+    <div id="infoPanel" class="w-1/3 p-6 border-r border-white/20 bg-white/10 backdrop-blur-sm relative">
+      <h2 class="text-xl font-bold mb-4">Patient Information</h2>
+      <div class="space-y-2 text-sm">
+        <p><strong>Name:</strong> <span id="pName" class="font-semibold text-green-700">N/A</span></p>
+        <p><strong>Condition:</strong> <span id="pCondition" class="font-semibold text-green-700">N/A</span></p>
+        <p><strong>Temperature:</strong> <span id="pTemp" class="font-semibold text-green-700">N/A</span></p>
+        <p><strong>Heartbeat:</strong> <span id="pHeartbeat" class="font-semibold text-green-700">N/A</span></p>
+        <p><strong>Heart Rate:</strong> <span id="pHeartRate" class="font-semibold text-green-700">N/A</span></p>
+        <p><strong>Age:</strong> <span id="pAge" class="font-semibold text-green-700">N/A</span></p>
+        <p><strong>ID:</strong> <span id="pID" class="font-semibold text-green-700">N/A</span></p>
+      </div>
+
+      <!-- Logo and Welcome -->
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center">
+        <img src="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png"
+          alt="Logo" class="w-50 h-50 mx-auto mb-10 shadow-md rounded-sm" />
+        <p class="text-3xl font-semibold text-blue-700">Karibu Daktari</p>
+        <a href="index.html" class="mt-10 inline-block px-4 py-1.5 bg-yellow-600 hover:bg-yellow-600 text-white text-sm rounded-full shadow transition">
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="w-2/3 p-4 relative h-full flex flex-col">
+      <h2 class="text-lg font-bold mb-2">Patients Under Care</h2>
+
+      <!-- Carousel -->
+      <div id="carousel" class="carousel flex overflow-x-scroll gap-4 py-4 flex-nowrap flex-grow"></div>
+
+      <!-- Message & Notes -->
+      <div class="flex gap-4 mt-4 h-[260px]">
+        
+       <!-- Message Box -->
+<div class="w-1/2 bg-white/20 backdrop-blur-[6px] border border-white/20 p-3 rounded-xl shadow flex flex-col">
+  <h3 class="text-md font-semibold mb-2">
+    Send Message to: <span id="messageTarget" class="text-blue-800 font-bold">John Doe</span>
+  </h3>
+
+  <textarea id="messageInput"
+    class="w-full h-[130px] p-2 rounded resize-none bg-white/10 backdrop-blur-[3px] border border-gray-300 focus:outline-none focus:ring focus:border-blue-400 text-black text-sm mb-2"
+    placeholder="Type your message here..."></textarea>
+
+  <div class="flex justify-end">
+    <button onclick="sendMessage()"
+      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm min-w-[100px]">
+      Send
+    </button>
+  </div>
+</div>
+
+        <!-- Doctor's Notes -->
+        <div class="w-1/2 backdrop-blur-sm bg-white/30 border border-white/20 p-3 rounded-xl shadow">
+          <h3 class="text-md font-semibold mb-2">Doctor's Notes</h3>
+          <p><strong>Status:</strong> <span id="patientStatus" class="text-green-600 font-semibold">N/A</span></p>
+          <p><strong>Future Plan:</strong> <span id="futurePlan" class="text-green-600 font-semibold">N/A</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const patients = [
+    {
+      name: "John Doe", condition: "Asthma", temp: "36.8°C", heartbeat: "72 bpm",
+      heartRate: "Normal", age: 34, id: "P001", status: "Responding to inhaler", plan: "Review in 1 week"
+    },
+    {
+      name: "Jane Smith", condition: "Diabetes", temp: "37.1°C", heartbeat: "75 bpm",
+      heartRate: "Normal", age: 42, id: "P002", status: "Stable glucose", plan: "Monitor insulin levels weekly"
+    },
+    {
+      name: "Ali Yusuf", condition: "Hypertension", temp: "37.3°C", heartbeat: "80 bpm",
+      heartRate: "Elevated", age: 51, id: "P003", status: "High BP decreasing", plan: "Diet change + medication"
+    },
+    {
+      name: "Grace Kamau", condition: "Fever", temp: "38.5°C", heartbeat: "88 bpm",
+      heartRate: "High", age: 29, id: "P004", status: "Fever reducing", plan: "Discharge after next test"
+    }
+  ];
+
+  const carousel = document.getElementById("carousel");
+  const loopPatients = [...patients, ...patients, ...patients];
+
+  loopPatients.forEach((patient, index) => {
+    const card = document.createElement("div");
+    card.className = `
+      min-w-[200px] h-[120px]
+      bg-white/20 backdrop-blur-md
+      rounded-xl border border-white/30
+      shadow-lg flex flex-col justify-center items-center text-center
+      snap-center cursor-pointer
+      hover:border-blue-400 transition
+    `.trim();
+
+    card.dataset.index = index % patients.length;
+
+    card.innerHTML = `
+      <p class="font-semibold text-black drop-shadow">${patient.name}</p>
+      <p class="text-sm font-semibold text-blue-700">${patient.condition}</p>
+    `;
+    carousel.appendChild(card);
+  });
+
+  function updateInfoPanel(index) {
+    const p = patients[index];
+    document.getElementById("pName").textContent = p.name;
+    document.getElementById("pCondition").textContent = p.condition;
+    document.getElementById("pTemp").textContent = p.temp;
+    document.getElementById("pHeartbeat").textContent = p.heartbeat;
+    document.getElementById("pHeartRate").textContent = p.heartRate;
+    document.getElementById("pAge").textContent = p.age;
+    document.getElementById("pID").textContent = p.id;
+    document.getElementById("patientStatus").textContent = p.status || "N/A";
+    document.getElementById("futurePlan").textContent = p.plan || "N/A";
+    document.getElementById("messageTarget").textContent = p.name;
+  }
+
+  updateInfoPanel(0);
+
+  let scrollSpeed = 4;
+  let isPaused = false;
+
+  function autoScroll() {
+    if (!isPaused) {
+      carousel.scrollLeft += scrollSpeed;
+      if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth) {
+        carousel.scrollLeft = 0;
+      }
+      updateCenterPatient();
+    }
+    requestAnimationFrame(autoScroll);
+  }
+
+  function updateCenterPatient() {
+    const cards = [...carousel.children];
+    const centerX = carousel.scrollLeft + carousel.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDist = Infinity;
+    cards.forEach((card, i) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(centerX - cardCenter);
+      if (distance < closestDist) {
+        closestDist = distance;
+        closestIndex = i;
+      }
+    });
+    const realIndex = Number(carousel.children[closestIndex]?.dataset.index);
+    if (!isNaN(realIndex)) updateInfoPanel(realIndex);
+  }
+
+  window.addEventListener("load", () => {
+    carousel.scrollLeft = 0;
+    autoScroll();
+  });
+
+  // Scroll pause/resume logic
+  carousel.addEventListener("mouseenter", () => isPaused = true);
+  carousel.addEventListener("mouseleave", () => isPaused = false);
+  carousel.addEventListener("touchstart", () => isPaused = true);
+  carousel.addEventListener("touchend", () => isPaused = false);
+
+  carousel.addEventListener("click", (e) => {
+    const card = e.target.closest('[data-index]');
+    if (card) {
+      const index = Number(card.dataset.index);
+      updateInfoPanel(index);
+      card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+
+      // Pause scroll for 3 seconds
+      isPaused = true;
+      clearTimeout(window.pauseTimeout);
+      window.pauseTimeout = setTimeout(() => {
+        if (document.activeElement !== document.getElementById("messageInput")) {
+          isPaused = false;
+        }
+      }, 3000);
+    }
+  });
+
+  function sendMessage() {
+    const message = document.getElementById("messageInput").value.trim();
+    const patientName = document.getElementById("pName").textContent;
+    if (message === "") {
+      alert("Please write a message before sending.");
+      return;
+    }
+    alert('Message sent to ${patientName}:\n\n"${message}"');
+    document.getElementById("messageInput").value = "";
+  }
+
+  // Pause scroll when typing
+  const messageInput = document.getElementById("messageInput");
+  messageInput.addEventListener("focus", () => isPaused = true);
+  messageInput.addEventListener("blur", () => isPaused = false);
+</script>
+</body>
+</html>
