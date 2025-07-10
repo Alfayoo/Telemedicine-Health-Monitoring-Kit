@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <style>
+        a{
+            justify-content: center;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h1>GROUP NINE AND GROUP TEN PROJECT DIGITAL HOSPITAL</h1>
+
+                </div>
+                <div class="card-body ">
+                  
+    
+                        <a class="btn btn-primary " href="patient.html" role="button"><h3>Login as Patient</h3></a>
+                        <a class="btn btn-success" href="doctor_login.html" role="button"><h3>Login as Doctor</h3></a>
+                        <a class="btn btn-warning" href="admin_login.html" role="button"><h3>Login as Admin</h3></a>
+                        <a class="btn btn-warning" href="aboutus.html" role="button"><h3>About Us</h3></a>
+
+                    
+
+                </div>
+                <div class="real-time-clock">
+        <h3 id="clock"></h3>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            const dateString = now.toLocaleDateString();
+            document.getElementById('clock').textContent = `${dateString} ${timeString}`;
+        }
+        
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>
