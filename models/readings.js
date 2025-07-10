@@ -1,6 +1,6 @@
 const express = require('express');
 const Reading = require('../models/Reading');
-const Device = require('../models/Device');
+const Device = require('./Device');
 const { checkAlerts } = require('../utils/alerts');
 const router = express.Router();
 
