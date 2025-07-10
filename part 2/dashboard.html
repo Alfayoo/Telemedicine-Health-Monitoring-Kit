@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <title>Patient Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: "Times New Roman", Times,serif;
+      background-color: rgb(215, 183, 188);
+      font-family: "Times New Roman", Times, serif;
     }
 
     #bgVideo {
@@ -19,14 +21,14 @@
     }
 
     .logo-img {
-  width: 500px;         /* bigger width */
-  height: auto;         /* auto height for aspect ratio */
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 3px solid white;
-  border-radius: 0;     /* keep it square */
-  object-fit: contain;  /* prevent distortion */
-}
+      width: 500px;
+      height: auto;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border: 3px solid white;
+      border-radius: 0;
+      object-fit: contain;
+    }
 
     .scroll-container {
       height: 1000px;
@@ -44,12 +46,12 @@
     }
 
     .welcome-heading {
-  font-size: 40px;      /* You can adjust to 30px, 32px, etc. */
-  font-weight: 700;
-  color: white;
-  letter-spacing: 0.5px;
-  text-align: center;
-}
+      font-size: 40px;
+      font-weight: 700;
+      color: rgb(27, 18, 18);
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
 
     .card {
       width: 90%;
@@ -77,6 +79,7 @@
       transform: scale(0.8);
       opacity: 0.5;
     }
+
   </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden">
@@ -86,145 +89,59 @@
     <source src="Flying_above_the_clouds,_1_hour,_no_looping_or_cuts,_no_sound(1080p).mp4" type="video/mp4" />
   </video>
 
-  <!-- Dashboard Container: Split Screen -->
+  <!-- Dashboard Container -->
   <div class="relative z-10 flex h-screen">
     
-  
+    <!-- LEFT SIDE -->
+    <div id="sidebar" class="sidebar-blur w-1/2 p-6 flex flex-col items-center text-white">
 
+      <!-- LOGO -->
+      <div class="mb-8">
+        <img src="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png" alt="Hospital Logo" class="w-80 h-auto">
+      </div>
 
-<!-- LEFT SIDE: Updated Sidebar Layout -->
-<div id="sidebar" class="sidebar-blur w-1/2 p-6 flex flex-col items-center text-white">
+      <!-- BUTTONS -->
+      <div class="mb-8">
+        <div class="flex gap-4">
+          <button onclick="toggleModal('infoModal')" class="bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-full shadow text-white">Patient Info</button>
+          <button onclick="toggleModal('messageModal')" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-full shadow text-white">Messages</button>
+          <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full shadow text-white">Log Out</button>
+        </div>
+      </div>
 
+      <!-- HEART RATE CHART -->
+      <div class="w-full max-w-xs mb-6 bg-white/20 backdrop-blur-md border border-white/30 p-4 rounded-lg shadow-lg">
+        <h2 class="text-center text-blue-800 font-semibold mb-2">Heart Rate Chart</h2>
+        <canvas id="heartRateChart" width="300" height="200"></canvas>
+      </div>
 
-  <!-- TOP: Logo -->
-<div class="mb-8">
-  <img src="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png"
-       alt="Hospital Logo"
-       class="w-80 h-auto">
-</div>
+      <!-- TEMPERATURE CHART -->
+      <div class="w-full max-w-xs mb-6 bg-white/20 backdrop-blur-md border border-white/30 p-4 rounded-lg shadow-lg">
+        <h2 class="text-center text-red-700 font-semibold mb-2">Temperature Chart</h2>
+        <canvas id="temperatureChart" width="300" height="200"></canvas>
+      </div>
 
-  <!-- MIDDLE: Buttons in one horizontal row -->
-  <div class="mb-8">
-    <div class="flex gap-4">
-      <button onclick="toggleModal('infoModal')" class="bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-full shadow text-white">
-        Patient Info
-      </button>
-      <button onclick="toggleModal('messageModal')" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-full shadow text-white">
-        Messages
-      </button>
-      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full shadow text-white">
-        Log Out
-      </button>
-    </div>
-  </div>
-
- <!-- FORM SECTION -->
-<div class="w-full max-w-xs mb-6">
-  <form onsubmit="handleSubmit(event)" 
-        class="space-y-4 text-black bg-white/20 backdrop-blur-md border border-white/30 
-               p-4 rounded-lg shadow-lg">
-
-    <h2 class="text-center text-sky-700 font-semibold text-lg mb-2">
-      How are you feeling today? 😃
-    </h2>
-
-    <div>
-      <label class="block text-sm font-semibold text-gray-700 mb-1">Heartbeat</label>
-      <input id="heartbeat" type="text" placeholder="e.g. 75" 
-             class="w-full p-2 rounded bg-white border border-gray-300">
+      <!-- WELCOME -->
+      <div class="mt-auto text-white text-center">
+        <h1 class="welcome-heading">Welcome, John Doe</h1>
+      </div>
     </div>
 
-    <div>
-      <label class="block text-sm font-semibold text-gray-700 mb-1">Temperature</label>
-      <input id="temperature" type="text" placeholder="e.g. 36.7" 
-             class="w-full p-2 rounded bg-white border border-gray-300">
-    </div>
+    <!-- RIGHT SIDE -->
+    <div class="w-1/2 p-6 flex items-center justify-center">
+      <div class="scroll-container w-full">
+        <div class="scroll-track" id="track">
 
-    <div>
-      <label class="block text-sm font-semibold text-gray-700 mb-1">Heart Rate</label>
-      <input id="heartrate" type="text" placeholder="e.g. 80" 
-             class="w-full p-2 rounded bg-white border border-gray-300">
-    </div>
+          <div class="card"><h2 class="text-xl font-bold text-sky-600">Heart Rate</h2><p class="text-3xl font-semibold">76 bpm</p><p class="text-green-500">Normal</p></div>
+          <div class="card"><h2 class="text-xl font-bold text-sky-600">Temperature</h2><p class="text-3xl font-semibold">36.5°C</p><p class="text-green-500">Stable</p></div>
+          <div class="card"><h2 class="text-xl font-bold text-sky-600">Upcoming Appointment</h2><p class="text-lg">14 July 2025, 9:00 AM</p><p class="text-sm text-gray-700">With Dr. Janet Kimani</p></div>
+          <div class="card"><h2 class="text-xl font-bold text-sky-600">Medical History</h2><ul class="list-disc ml-5 text-sm mt-2"><li>Hypertension (since 2021)</li><li>Allergy to Penicillin</li></ul></div>
+          <div class="card flex items-center gap-4"><img src="user-profile.jpg" alt="User" class="w-16 h-16 rounded-full object-cover"><div><h2 class="text-xl font-bold text-sky-600">Jane Doe</h2><p class="text-sm text-gray-700">Patient ID: P102938 • Age: 28</p></div></div>
 
-    <button type="submit" 
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-      Submit
-    </button>
-
-    <!-- Success Message -->
-    <p id="successMessage" class="hidden mt-2 text-center text-green-600 font-semibold">
-      Vitals submitted successfully!
-    </p>
-  </form>
-</div>
-  <!-- WELCOME MESSAGE AT BOTTOM -->
-  <div class="mt-auto text-white text-center">
-    <h1 class="welcome-heading">Welcome, John Doe</h1>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-  <!-- RIGHT SIDE (Scrolling Cards) -->
-  <div class="w-1/2 p-6 flex items-center justify-center">
-    <div class="scroll-container w-full">
-      <div class="scroll-track" id="track">
-
-
-        <!-- Repeat content to enable looping effect -->
-        <div class="card">
-          <h2 class="text-xl font-bold text-sky-600">Heart Rate</h2>
-          <p class="text-3xl font-semibold">76 bpm</p>
-          <p class="text-green-500">Normal</p>
+          <!-- Duplicates -->
+          <div class="card"><h2 class="text-xl font-bold text-sky-600">Heart Rate</h2><p class="text-3xl font-semibold">76 bpm</p><p class="text-green-500">Normal</p></div>
+          <div class="card"><h2 class="text-xl font-bold text-sky-600">Temperature</h2><p class="text-3xl font-semibold">36.5°C</p><p class="text-green-500">Stable</p></div>
         </div>
-
-        <div class="card">
-          <h2 class="text-xl font-bold text-sky-600">Temperature</h2>
-          <p class="text-3xl font-semibold">36.5°C</p>
-          <p class="text-green-500">Stable</p>
-        </div>
-
-        <div class="card">
-          <h2 class="text-xl font-bold text-sky-600">Upcoming Appointment</h2>
-          <p class="text-lg">14 July 2025, 9:00 AM</p>
-          <p class="text-sm text-gray-700">With Dr. Janet Kimani</p>
-        </div>
-
-        <div class="card">
-          <h2 class="text-xl font-bold text-sky-600">Medical History</h2>
-          <ul class="list-disc ml-5 text-sm mt-2">
-            <li>Hypertension (since 2021)</li>
-            <li>Allergy to Penicillin</li>
-          </ul>
-        </div>
-
-        <div class="card flex items-center gap-4">
-          <img src="user-profile.jpg" alt="User" class="w-16 h-16 rounded-full object-cover">
-          <div>
-            <h2 class="text-xl font-bold text-sky-600">Jane Doe</h2>
-            <p class="text-sm text-gray-700">Patient ID: P102938 • Age: 28</p>
-          </div>
-        </div>
-
-        <!-- Duplicate set for smooth infinite feel -->
-        <div class="card">
-          <h2 class="text-xl font-bold text-sky-600">Heart Rate</h2>
-          <p class="text-3xl font-semibold">76 bpm</p>
-          <p class="text-green-500">Normal</p>
-        </div>
-
-        <div class="card">
-          <h2 class="text-xl font-bold text-sky-600">Temperature</h2>
-          <p class="text-3xl font-semibold">36.5°C</p>
-          <p class="text-green-500">Stable</p>
-        </div>
-
       </div>
     </div>
   </div>
@@ -236,7 +153,6 @@
   let scrollInterval;
   let userScrolling = false;
 
-  // Clone cards for seamless looping
   track.innerHTML += track.innerHTML;
 
   function updateCards() {
@@ -251,13 +167,9 @@
 
       card.classList.remove('center', 'near', 'far');
 
-      if (distance < 50) {
-        card.classList.add('center');
-      } else if (distance < 130) {
-        card.classList.add('near');
-      } else {
-        card.classList.add('far');
-      }
+      if (distance < 50) card.classList.add('center');
+      else if (distance < 130) card.classList.add('near');
+      else card.classList.add('far');
     });
 
     requestAnimationFrame(updateCards);
@@ -266,55 +178,23 @@
   function toggleModal(id) {
     const modal = document.getElementById(id);
     modal.classList.toggle('hidden');
-    modal.classList.toggle('flex'); // enables flex layout
+    modal.classList.toggle('flex');
   }
-function logout(){
-    window.location.href="index.html";
-}
+
+  function logout() {
+    window.location.href = "index.html";
+  }
 
   function startAutoScroll() {
     scrollInterval = setInterval(() => {
       if (!userScrolling) {
         container.scrollTop += 10;
-
-        // Loop smoothly
         if (container.scrollTop >= track.scrollHeight / 2) {
           container.scrollTop = container.scrollTop - track.scrollHeight / 2;
         }
       }
-    }, 20); // lower is faster
+    }, 20);
   }
-
-  function handleSubmit(event) {
-    event.preventDefault(); // prevent form reload
-
-    const heartbeat = document.getElementById('heartbeat');
-    const temperature = document.getElementById('temperature');
-    const heartrate = document.getElementById('heartrate');
-    const successMsg = document.getElementById('successMessage');
-
-    // Append units if not already present
-    if (heartbeat.value && !heartbeat.value.toLowerCase().includes('bpm')) {
-      heartbeat.value = heartbeat.value.trim() + ' bpm';
-    }
-
-    if (temperature.value && !temperature.value.includes('°C')) {
-      temperature.value = temperature.value.trim() + ' °C';
-    }
-
-    if (heartrate.value && !heartrate.value.toLowerCase().includes('bpm')) {
-      heartrate.value = heartrate.value.trim() + ' bpm';
-    }
-
-    // Show success message
-    successMsg.classList.remove('hidden');
-
-    // Hide message after 3 seconds
-    setTimeout(() => {
-      successMsg.classList.add('hidden');
-    }, 3000);
-  }
-
 
   function pauseAutoScroll() {
     userScrolling = true;
@@ -331,9 +211,83 @@ function logout(){
 
   updateCards();
   startAutoScroll();
+
+  // HEART RATE CHART
+  const ctxHeart = document.getElementById('heartRateChart').getContext('2d');
+  const heartRateChart = new Chart(ctxHeart, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Heart Rate (bpm)',
+        data: [72, 76, 78, 80, 75, 73, 77],
+        borderColor: 'rgb(37, 99, 235)',
+        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: 'rgb(37, 99, 235)',
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false,
+          title: {
+            display: true,
+            text: 'BPM'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Day'
+          }
+        }
+      }
+    }
+  });
+
+  // TEMPERATURE CHART
+  const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
+  const temperatureChart = new Chart(ctxTemp, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Temperature (°C)',
+        data: [36.5, 36.7, 36.6, 36.8, 36.4, 36.5, 36.6],
+        borderColor: 'rgb(220, 38, 38)',
+        backgroundColor: 'rgba(220, 38, 38, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: 'rgb(220, 38, 38)',
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false,
+          title: {
+            display: true,
+            text: '°C'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Day'
+          }
+        }
+      }
+    }
+  });
 </script>
 
-<!-- Patient Info Modal -->
+<!-- MODALS -->
 <div id="infoModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
   <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-md">
     <h2 class="text-xl font-bold mb-4">Patient Information</h2>
@@ -346,15 +300,11 @@ function logout(){
       <li><strong>Gender:</strong> Male</li>
     </ul>
     <div class="text-right mt-6">
-      <button onclick="toggleModal('infoModal')" class="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700">
-        Close
-      </button>
+      <button onclick="toggleModal('infoModal')" class="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700">Close</button>
     </div>
   </div>
 </div>
 
-
-<!-- Appointments Modal -->
 <div id="messageModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
   <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-md">
     <h2 class="text-xl font-bold mb-4">Upcoming Appointments</h2>
@@ -363,12 +313,11 @@ function logout(){
       <li>✔ <strong>August 2, 2025</strong> – Dr. Joseph Otieno @ 11:00 AM</li>
     </ul>
     <div class="text-right mt-6">
-      <button onclick="toggleModal('messageModal')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Close
-      </button>
+      <button onclick="toggleModal('messageModal')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Close</button>
     </div>
   </div>
 </div>
 
 </body>
 </html>
+

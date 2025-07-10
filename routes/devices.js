@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const device = new Device(req.body);
-    await device.save();
+    await device.save(); 
     res.status(201).json(device);
   } catch (error) {
     res.status(400).json({ error: error.message });

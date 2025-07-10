@@ -7,6 +7,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
+const devicesRoutes= require('./routes/devices'); // Device Routes
 const appointmentRoutes = require('./routes/appointment');
 const doctorRoutes = require('./routes/doctor');
 const healthMetricRoutes = require('./routes/healthMetric'); // Health Metric Routes
@@ -54,6 +55,6 @@ app.get('/', (req, res) => {
   res.send('Telemedicine Backend API is running!');
 });
 
-// --- Server Start ---
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+/// --- Server Start ---
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
