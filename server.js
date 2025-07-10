@@ -7,6 +7,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
+const devicesRoutes= require('./routes/devices'); // Device Routes
 const appointmentRoutes = require('./routes/appointment');
 const doctorRoutes = require('./routes/doctor');
 const healthMetricRoutes = require('./routes/healthMetric'); // Health Metric Routes
