@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <style>
+        .card{
+            width: 50%;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-center text-white">
+                    <h1>Signup Form</h1>
+                    
+
+                </div>
+                 <div class="card-body">
+                    <form action="connect.php" method="post" >
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <input type="text" class="form-control" id="firstname" name="firstname"/>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" class="form-control" id="lastname" name="lastname"/>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <div>
+                                <label for="male" class="radio-inline"><input type="radio" name="gender" id="male" value="m">Male</label>
+                                <label for="female" class="radio-inline"><input type="radio" name="gender" id="female" value="f">Female</label>
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"/>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"/>
+
+                        </div>
+                        <input type="submit"class="btn btn-primary" value="Signup"/>
+                        
+                       
+
+                    </form>
+                    
+                </div>
+                 <div class="card-footer text-white text-right bg-primary">
+                    <small>&copy;Kevin Wesonga</small>
+                    
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+</html>
