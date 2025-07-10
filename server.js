@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 const appointmentRoutes = require('./routes/appointment');
 const doctorRoutes = require('./routes/doctor');
 const healthMetricRoutes = require('./routes/healthMetric'); // Health Metric Routes
+const sensorRoute = require('./routes/sensor');
 
 const app = express();
 
@@ -44,6 +45,8 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/doctors', doctorRoutes);
 // The healthMetricRoutes are mounted here, including the /api/device/healthmetrics endpoint
 app.use('/api/healthmetrics', healthMetricRoutes);
+// mounts the route for sensor
+app.use('/api/sensor', sensorRoute);
 
 
 // --- Basic Root Route ---
