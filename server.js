@@ -12,8 +12,10 @@ const appointmentRoutes = require('./routes/appointment');
 const doctorRoutes = require('./routes/doctor');
 const healthMetricRoutes = require('./routes/healthMetric'); // Health Metric Routes
 const sensorRoute = require('./routes/sensor');
+const cors = require('cors');
 
 const app = express();
+
 // --- Database Connection ---
 const connectDB = async () => {
   try {
@@ -31,11 +33,14 @@ const connectDB = async () => {
   }
 };
 
-// ConnecAt to the database
+// Connect to the database
 connectDB();
 app.use(express.static('public'));
 
 // --- Middleware ---
+// CORS middleware - ADD THIS LINE
+app.use(cors());
+
 // THIS IS CRUCIAL: It parses incoming JSON payloads from requests (like from your Arduino)
 // and makes them available on req.body.
 app.use(express.json());
@@ -48,7 +53,6 @@ app.use('/api/doctors', doctorRoutes);
 app.use('/api/healthmetrics', healthMetricRoutes);
 // mounts the route for sensor
 app.use('/api/sensor', sensorRoute);
-
 
 // --- Basic Root Route ---
 app.get('/', (req, res) => {
