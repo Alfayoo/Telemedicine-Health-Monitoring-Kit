@@ -61,174 +61,161 @@
 </head>
 <body class="relative min-h-screen overflow-hidden">
 
-  <!-- Background Video (Should NOT push content) -->
-  <video autoplay muted loop playsinline id="bgVideo">
+
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline id="bgVideo" class="absolute inset-0 w-full h-full object-cover z-0">
     <source src="log in bck.mp4" type="video/mp4" />
   </video>
 
-  <!-- Foreground Content (Centered Form) -->
+  <!-- Centered Form Container -->
 <div class="absolute inset-0 flex items-center justify-center p-4 z-10">
-  <div class="w-full max-w-xl p-8 rounded-2xl shadow-lg"
-       style="background-color: rgba(255, 255, 255, 0.08); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(50px);">
-    
-    <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">WELCOME TO</h2>
+  <div class="w-full max-w-xl p-6 rounded-2xl shadow-lg border border-white/20 bg-white/5 backdrop-blur-sm">
 
-    <!-- Logo image -->
-    <img src="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png"
-         alt="logo" class="logo">
-
-    
-    <!-- LOGIN FORM -->
-<div id="loginForm">
-  <!-- Role Toggle Buttons -->
-  <div class="flex justify-center gap-4 mb-4">
-    <button type="button" onclick="selectLogin('patient')" id="patientBtn"
-      class="bg-blue-600 text-white px-4 py-2 rounded-lg">Patient</button>
-    <button type="button" onclick="selectLogin('doctor')" id="doctorBtn"
-      class="bg-gray-300 text-black px-4 py-2 rounded-lg">Doctor</button>
-  </div>
-
-  <form onsubmit="handleLogin(event)">
-    <!-- Hidden Role Field -->
-    <input type="hidden" id="loginType" value="patient">
-
-    <div class="mb-4">
-      <label class="block text-black-700">Email</label>
-      <input type="email" class="w-full border rounded-lg px-4 py-2" required>
+    <!-- Fixed Logo and Title (Not Scrollable) -->
+    <div class="text-center mb-4">
+      <h2 class="text-2xl font-bold text-blue-600 mb-2">WELCOME TO</h2>
+      <img src="Screenshot 2025-07-09 at 12-09-09 Free Logo Maker - Get Custom Logo Designs in Minutes Looka.png" 
+           alt="logo" class="w-48 mx-auto mb-4">
     </div>
 
-    <div class="mb-4">
-      <label class="block text-black-700">Password/License Number</label>
-      <input type="password" class="w-full border rounded-lg px-4 py-2" required>
-    </div>
-
-    <div class="text-right mb-4 text-sm text-blue-600 hover:underline cursor-pointer">Forgot Password?</div>
-
-    <button type="submit"
-      class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
-      Login
-    </button>
-
-    <div class="mt-4 text-center text-sm text-black-600">
-      Don't have an account?
-      <span class="text-blue-600 cursor-pointer hover:underline" onclick="toggleForms()">Create Account</span>
-    </div>
-  </form>
-</div>
-
-
-<!-- REGISTRATION FORM -->
-<div id="registerForm" class="hidden">
-  <div style="max-height: 40vh; overflow-y: auto; padding-top: 1rem; padding-bottom: 1rem;">
-    <form>
-      <!-- Role Selection -->
-      <div class="mb-4">
-        <label class="block text-black-700">Registering as:</label>
-        <select id="userRole" class="w-full border rounded-lg px-4 py-2" required>
-          <option value="">-- Select Role --</option>
-          <option value="patient">Patient</option>
-          <option value="doctor">Doctor</option>
-        </select>
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-black-700">Full Name</label>
-        <input type="text" class="w-full border rounded-lg px-4 py-2" required>
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-black-700">Email</label>
-        <input type="email" class="w-full border rounded-lg px-4 py-2" required>
-      </div>
-
+    <!-- Scrollable Forms -->
+    <div class="max-h-[60vh] overflow-y-auto pr-1">
       
-
-      <div class="mb-4">
-        <label class="block text-black-700">County</label>
-        <select id="countySelect" onchange="updateConstituencies()" class="w-full border rounded-lg px-4 py-2" required>
-          <option value="">-- Select County --</option>
-        </select>
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-black-700">Constituency</label>
-        <select id="constituencySelect" class="w-full border rounded-lg px-4 py-2" required>
-          <option value="">-- Select Constituency --</option>
-        </select>
-      </div>
-
-    <div class="mb-4">
-        <label class="block text-black-700">Date of Birth</label>
-        <input type="date" class="w-full border rounded-lg px-4 py-2" required>
-      </div>
-
-      <div class="mb-6">
-        <label class="block text-black-700 mb-1">Gender</label>
-        <div class="flex gap-4">
-          <label><input type="radio" name="gender" value="Male" required class="mr-2"> Male</label>
-          <label><input type="radio" name="gender" value="Female" class="mr-2"> Female</label>
-          <label><input type="radio" name="gender" value="Other" class="mr-2"> Other</label>
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <div class="flex justify-center gap-4 mb-4">
+          <button type="button" onclick="selectLogin('patient')" id="patientBtn"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg">Patient</button>
+          <button type="button" onclick="selectLogin('doctor')" id="doctorBtn"
+            class="bg-gray-300 text-black px-4 py-2 rounded-lg">Doctor</button>
         </div>
+
+        <form onsubmit="handleLogin(event)">
+          <input type="hidden" id="loginType" value="patient" />
+          <div class="mb-4">
+            <label class="block text-black-700">Email</label>
+            <input type="email" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
+          <div class="mb-4">
+            <label class="block text-black-700">Password</label>
+            <input type="password" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
+          <div class="text-right mb-4 text-sm text-blue-600 hover:underline cursor-pointer">Forgot Password?</div>
+          <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
+            Login
+          </button>
+          <div class="mt-4 text-center text-sm text-black-600">
+            Don't have an account?
+            <span class="text-blue-600 cursor-pointer hover:underline" onclick="toggleForms()">Create Account</span>
+          </div>
+        </form>
       </div>
 
+      <!-- REGISTRATION FORM -->
+      <div id="registerForm" class="hidden">
+        <form class="space-y-4">
+          <div>
+            <label class="block text-black-700">Registering as:</label>
+            <select id="userRole" class="w-full border rounded-lg px-4 py-2" required>
+              <option value="">-- Select Role --</option>
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+            </select>
+          </div>
 
+          <div>
+            <label class="block text-black-700">Full Name</label>
+            <input name="name" type="text" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
 
+          <div>
+            <label class="block text-black-700">Email</label>
+            <input type="email" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
 
-      <!-- Shared Password Fields -->
-<div id="passwordFields" class="mb-4">
-  <label class="block text-black-700">Create Password</label>
-  <input type="password" id="regPassword" class="w-full border rounded-lg px-4 py-2" required>
+          <div>
+            <label class="block text-black-700">County</label>
+            <select id="countySelect" class="w-full border rounded-lg px-4 py-2" required>
+              <option value="">-- Select County --</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-black-700">Constituency</label>
+            <select id="constituencySelect" class="w-full border rounded-lg px-4 py-2" required>
+              <option value="">-- Select Constituency --</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-black-700">Date of Birth</label>
+            <input type="date" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
+
+          <div>
+            <label class="block text-black-700">Gender</label>
+            <div class="flex gap-4">
+              <label><input type="radio" name="gender" value="Male" required class="mr-2"> Male</label>
+              <label><input type="radio" name="gender" value="Female" class="mr-2"> Female</label>
+              <label><input type="radio" name="gender" value="Other" class="mr-2"> Other</label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-black-700">Create Password</label>
+            <input type="password" id="regPassword" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
+
+          <div>
+            <label class="block text-black-700">Confirm Password</label>
+            <input type="password" id="confirmPassword" class="w-full border rounded-lg px-4 py-2" required />
+          </div>
+
+          <!-- Doctor Fields -->
+          <div id="doctorFields" class="hidden">
+            <div>
+              <label class="block text-black-700">Hospital/Clinic Name</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2" />
+            </div>
+            <div>
+              <label class="block text-black-700">Specialization</label>
+              <input name="specialization" type="text" class="w-full border rounded-lg px-4 py-2" />
+            </div>
+            <div>
+              <label class="block text-black-700">License Number</label>
+              <input type="text" class="w-full border rounded-lg px-4 py-2" />
+            </div>
+          </div>
+
+          <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
+            Submit
+          </button>
+
+          <div class="mt-4 text-center text-sm text-black-600">
+            Already have an account?
+            <span class="text-blue-600 cursor-pointer hover:underline" onclick="toggleForms()">Login</span>
+          </div>
+        </form>
+      </div>
+
+    </div> <!-- End Scrollable -->
+    
+  </div> <!-- End Container -->
 </div>
 
-<div class="mb-4">
-  <label class="block text-black-700">Confirm Password</label>
-  <input type="password" id="confirmPassword" class="w-full border rounded-lg px-4 py-2" required>
-</div>
 
-      
+<script>
+  console.log("🧪 Script loaded and running");
+  window.addEventListener("DOMContentLoaded", () => {
+    // Toggle between login and registration
+    function toggleForms() {
+      document.getElementById("loginForm").classList.toggle("hidden");
+      document.getElementById("registerForm").classList.toggle("hidden");
+    }
 
-      <!-- Doctor-only Fields -->
-      <div id="doctorFields" class="hidden">
-        <div class="mb-4">
-          <label class="block text-black-700">Hospital/Clinic Name</label>
-          <input type="text" class="w-full border rounded-lg px-4 py-2">
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-black-700">Specialization</label>
-          <input type="text" class="w-full border rounded-lg px-4 py-2">
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-black-700">License Number</label>
-          <input type="text" class="w-full border rounded-lg px-4 py-2">
-        </div>
-      </div>
-
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
-        Submit
-      </button>
-
-         <div class="mt-4 text-center text-sm text-black-600">
-        Already have an account?
-        <span class="text-blue-600 cursor-pointer hover:underline" onclick="toggleForms()">Login</span>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-
-
-
- <script>
-  // Toggle between login and registration
-  function toggleForms() {
-    document.getElementById("loginForm").classList.toggle("hidden");
-    document.getElementById("registerForm").classList.toggle("hidden");
-  }
-
-  // Constituency data per county
+    // Constituency data per county
      const constituenciesByCounty = {
        "Baringo": ["Baringo Central", "Baringo North", "Baringo South", "Eldama Ravine", "Mogotio", "Tiaty"],
       "Bomet": ["Bomet Central", "Bomet East", "Chepalungu", "Konoin", "Sotik"],
@@ -253,7 +240,7 @@
       "Lamu": ["Lamu East", "Lamu West"],
       "Machakos": ["Kangundo", "Kathiani", "Machakos Town", "Masinga", "Matungulu", 
       "Mavoko", "Mwala", "Yatta"],
-      "Makueni": ["Kaiti", "Kibwezi East", "Kibwezi West", "Kilome", "Makueni", "Mbooni"],
+       "Makueni": ["Kaiti", "Kibwezi East", "Kibwezi West", "Kilome", "Makueni", "Mbooni"],
       "Mandera": ["Banissa", "Lafey", "Mandera East", "Mandera North", "Mandera South", "Mandera West"],
       "Marsabit": ["Laisamis", "Moyale", "North Horr", "Saku"],
       "Meru": ["Buuri", "Central Imenti", "Igembe Central", "Igembe North", "Igembe South", "North Imenti", "South Imenti", "Tigania East", "Tigania West"],
@@ -281,80 +268,139 @@
 
     };
 
+    const countySelect = document.getElementById('countySelect');
+    const constituencySelect = document.getElementById('constituencySelect');
 
-
-  const countySelect = document.getElementById('countySelect');
-  const constituencySelect = document.getElementById('constituencySelect');
-
-  // Populate counties
-  for (const county in constituenciesByCounty) {
-    const option = document.createElement("option");
-    option.value = county;
-    option.textContent = county;
-    countySelect.appendChild(option);
-  }
-
-  function selectLogin(type) {
-    document.getElementById('loginType').value = type;
-
-    const patientBtn = document.getElementById('patientBtn');
-    const doctorBtn = document.getElementById('doctorBtn');
-
-    if (type === 'patient') {
-      patientBtn.classList.add('bg-blue-600', 'text-white');
-      patientBtn.classList.remove('bg-gray-300', 'text-black');
-      doctorBtn.classList.add('bg-gray-300', 'text-black');
-      doctorBtn.classList.remove('bg-blue-600', 'text-white');
-    } else {
-      doctorBtn.classList.add('bg-blue-600', 'text-white');
-      doctorBtn.classList.remove('bg-gray-300', 'text-black');
-      patientBtn.classList.add('bg-gray-300', 'text-black');
-      patientBtn.classList.remove('bg-blue-600', 'text-white');
+    // Populate counties dropdown
+    for (const county in constituenciesByCounty) {
+      const option = document.createElement("option");
+      option.value = county;
+      option.textContent = county;
+      countySelect.appendChild(option);
     }
-  }
 
-  function handleLogin(event) {
-    event.preventDefault();
-    const loginType = document.getElementById('loginType').value;
-    if (loginType === 'doctor') {
-      window.location.href = 'doctor-dashboard.html';
-    } else {
-      window.location.href = 'dashboard.html';
+    // Populate constituency dropdown based on county
+    countySelect.addEventListener('change', () => {
+      const selectedCounty = countySelect.value;
+      constituencySelect.innerHTML = '<option value="">-- Select Constituency --</option>';
+      if (constituenciesByCounty[selectedCounty]) {
+        constituenciesByCounty[selectedCounty].forEach(constituency => {
+          const opt = document.createElement("option");
+          opt.value = constituency;
+          opt.textContent = constituency;
+          constituencySelect.appendChild(opt);
+        });
+      }
+    });
+
+    // Role toggle buttons logic
+    function selectLogin(type) {
+      document.getElementById('loginType').value = type;
+      const patientBtn = document.getElementById('patientBtn');
+      const doctorBtn = document.getElementById('doctorBtn');
+
+      if (type === 'patient') {
+        patientBtn.classList.add('bg-blue-600', 'text-white');
+        patientBtn.classList.remove('bg-gray-300', 'text-black');
+        doctorBtn.classList.add('bg-gray-300', 'text-black');
+        doctorBtn.classList.remove('bg-blue-600', 'text-white');
+      } else {
+        doctorBtn.classList.add('bg-blue-600', 'text-white');
+        doctorBtn.classList.remove('bg-gray-300', 'text-black');
+        patientBtn.classList.add('bg-gray-300', 'text-black');
+        patientBtn.classList.remove('bg-blue-600', 'text-white');
+      }
     }
-  }
 
-  // Show doctor-specific fields on registration
-  const userRole = document.getElementById("userRole");
-  const doctorFields = document.getElementById("doctorFields");
+    // Show/hide doctor fields in registration
+    const userRole = document.getElementById("userRole");
+    const doctorFields = document.getElementById("doctorFields");
 
-  userRole.addEventListener("change", () => {
-    doctorFields.classList.toggle("hidden", userRole.value !== "doctor");
-  });
+    userRole.addEventListener("change", () => {
+      doctorFields.classList.toggle("hidden", userRole.value !== "doctor");
+    });
 
-  // Update constituencies based on county
-  function updateConstituencies() {
-    const selectedCounty = countySelect.value;
-    constituencySelect.innerHTML = '<option value="">-- Select Constituency --</option>';
-    if (selectedCounty && constituenciesByCounty[selectedCounty]) {
-      constituenciesByCounty[selectedCounty].forEach(constituency => {
-        const opt = document.createElement("option");
-        opt.value = constituency;
-        opt.textContent = constituency;
-        constituencySelect.appendChild(opt);
-      });
-    }
-  }
+    // Login handler
+    document.querySelector('#loginForm form').addEventListener('submit', async function (event) {
+      event.preventDefault();
 
-  // Registration form password match validation
-  document.querySelector('#registerForm form').addEventListener('submit', function (e) {
-    const pass = document.getElementById("regPassword").value;
-    const confirm = document.getElementById("confirmPassword").value;
+      const email = document.querySelector('#loginForm input[type="email"]').value;
+      const password = document.querySelector('#loginForm input[type="password"]').value;
 
-    if (pass !== confirm) {
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Welcome ${data.user.name}');
+          localStorage.setItem('token', data.token);
+
+          if (data.user.role === "doctor") {
+            window.location.href = "doctor-dashboard.html";
+          } else {
+            window.location.href = "dashboard.html";
+          }
+        } else {
+          alert(data.message || "Login failed");
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("Server error during login");
+      }
+    });
+
+    // Registration handler
+    document.querySelector('#registerForm form').addEventListener('submit', async function (e) {
       e.preventDefault();
-      alert("Passwords do not match!");
-    }
+
+      const role = document.getElementById("userRole").value;
+      const name = document.querySelector('#registerForm input[name="name"]').value;
+      const email = document.querySelector('#registerForm input[type="email"]').value;
+      const password = document.getElementById("regPassword").value;
+      const confirm = document.getElementById("confirmPassword").value;
+
+      if (password !== confirm) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      let specialization = null;
+      if (role === "doctor") {
+        specialization = document.querySelector('#doctorFields input[name="specialization"]').value;
+      }
+
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password, role, specialization })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Account created successfully!");
+          toggleForms();
+        } else {
+          alert(data.message || "Registration failed");
+        }
+      } catch (err) {
+        console.error("Registration error:", err);
+        alert("Server error during registration");
+      }
+    });
+
+    // Expose globally for onclick usage
+    window.toggleForms = toggleForms;
+    window.selectLogin = selectLogin;
   });
-</script> 
+</script>
+
+ 
 </body>
 </html>

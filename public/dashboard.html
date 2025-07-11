@@ -163,7 +163,7 @@
 
         <!-- WELCOME -->
         <div class="mt-auto text-white text-center">
-          <h1 class="welcome-heading">Welcome!!!</h1>
+          <h1 class="welcome-heading">Welcome, [User's Name]!</h1>
         </div>
       </div>
 
@@ -346,10 +346,15 @@
         window.location.href = "index.html";
       }
 
+
+
+
+
+
       function startAutoScroll() {
         scrollInterval = setInterval(() => {
           if (!userScrolling) {
-            container.scrollTop += 1;
+            container.scrollTop += 5;
             if (
               container.scrollTop + container.clientHeight >=
               container.scrollHeight
@@ -357,9 +362,14 @@
               container.scrollTop = 0;
             }
           }
-        }, 20);
+        }, 20);  //refresh
       }
 
+
+
+
+
+      
       function pauseAutoScroll() {
         userScrolling = true;
         clearInterval(scrollInterval);
@@ -481,7 +491,7 @@
 
             // --- Update ALL heart rate cards ---
             document.querySelectorAll(".currentBpm").forEach((el) => {
-              el.textContent = `${data.bpm} bpm`;
+              el.textContent = '${data.bpm} bpm';
             });
 
             const bpmStatus =
@@ -496,7 +506,7 @@
 
             // --- Update ALL temperature cards ---
             document.querySelectorAll(".currentTemp").forEach((el) => {
-              el.textContent = `${data.temperature.toFixed(1)}°C`;
+              el.textContent = '${data.temperature.toFixed(1)}°C';
             });
 
             const tempStatus =
