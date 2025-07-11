@@ -63,7 +63,7 @@
 
   <!-- Background Video (Should NOT push content) -->
   <video autoplay muted loop playsinline id="bgVideo">
-    <source src="Flying_over_and_through_large_clouds(1080p) (1).mp4" type="video/mp4" />
+    <source src="log in bck.mp4" type="video/mp4" />
   </video>
 
   <!-- Foreground Content (Centered Form) -->
@@ -98,7 +98,7 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-black-700">Password</label>
+      <label class="block text-black-700">Password/License Number</label>
       <input type="password" class="w-full border rounded-lg px-4 py-2" required>
     </div>
 
@@ -141,6 +141,12 @@
         <input type="email" class="w-full border rounded-lg px-4 py-2" required>
       </div>
 
+      <!-- Patient-only Fields -->
+<div id="patientPasswordField" class="hidden mb-4">
+  <label class="block text-black-700">Create Password</label>
+  <input type="password" class="w-full border rounded-lg px-4 py-2" required>
+</div>
+
       <div class="mb-4">
         <label class="block text-black-700">County</label>
         <select id="countySelect" onchange="updateConstituencies()" class="w-full border rounded-lg px-4 py-2" required>
@@ -168,6 +174,8 @@
           <label><input type="radio" name="gender" value="Other" class="mr-2"> Other</label>
         </div>
       </div>
+
+      
 
       <!-- Doctor-only Fields -->
       <div id="doctorFields" class="hidden">
@@ -309,6 +317,13 @@
   userRole.addEventListener("change", () => {
     doctorFields.classList.toggle("hidden", userRole.value !== "doctor");
   });
+
+  const patientPasswordField = document.getElementById("patientPasswordField");
+
+userRole.addEventListener("change", () => {
+  doctorFields.classList.toggle("hidden", userRole.value !== "doctor");
+  patientPasswordField.classList.toggle("hidden", userRole.value !== "patient");
+});
 
 
 
