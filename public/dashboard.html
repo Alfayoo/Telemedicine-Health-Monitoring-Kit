@@ -14,7 +14,12 @@
         background-color: rgb(215, 183, 188);
         font-family: "Hind Madurai", sans-serif;
       }
-      h1, h2, h3, h4, h5, h6 {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         font-family: "Montserrat", sans-serif;
       }
       #bgVideo {
@@ -129,6 +134,7 @@
             <!-- Start Button (no functionality yet) -->
             <button
               class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full shadow text-white"
+              onclick="startMonitoring()"
             >
               Start
             </button>
@@ -197,9 +203,7 @@
               />
               <div>
                 <h2 class="text-xl font-bold text-sky-600">Laura Shavia</h2>
-                <p class="text-sm text-gray-700">
-                  Patient ID:001 • Age:20
-                </p>
+                <p class="text-sm text-gray-700">Patient ID:001 • Age:20</p>
               </div>
             </div>
           </div>
@@ -261,11 +265,21 @@
       id="graphModal"
       class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
     >
-      <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-2xl">
-        <h2 class="text-xl font-bold mb-4 text-center">Temperature & BMI Graphs</h2>
-        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+      <div
+        class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-2xl"
+      >
+        <h2 class="text-xl font-bold mb-4 text-center">
+          Temperature & BMI Graphs
+        </h2>
+        <div
+          class="flex flex-col md:flex-row gap-6 justify-center items-center"
+        >
           <div>
-            <canvas id="modalTemperatureChart" width="300" height="200"></canvas>
+            <canvas
+              id="modalTemperatureChart"
+              width="300"
+              height="200"
+            ></canvas>
           </div>
           <div>
             <canvas id="bmiChart" width="300" height="200"></canvas>
@@ -290,7 +304,9 @@
       const originalCards = [...track.children];
       originalCards.forEach((card, i) => {
         const clone = card.cloneNode(true);
-        clone.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+        clone
+          .querySelectorAll("[id]")
+          .forEach((el) => el.removeAttribute("id"));
         track.appendChild(clone);
       });
 
@@ -506,14 +522,14 @@
         { timestamp: "2025-07-02", bmi: 22.3 },
         { timestamp: "2025-07-03", bmi: 22.2 },
         { timestamp: "2025-07-04", bmi: 22.4 },
-        { timestamp: "2025-07-05", bmi: 22.5 }
+        { timestamp: "2025-07-05", bmi: 22.5 },
       ];
       const tempData = [
         { timestamp: "2025-07-01", temperature: 36.7 },
         { timestamp: "2025-07-02", temperature: 36.8 },
         { timestamp: "2025-07-03", temperature: 37.0 },
         { timestamp: "2025-07-04", temperature: 36.9 },
-        { timestamp: "2025-07-05", temperature: 37.1 }
+        { timestamp: "2025-07-05", temperature: 37.1 },
       ];
 
       let modalTempChartInstance = null;
@@ -521,56 +537,73 @@
 
       function renderModalCharts() {
         // Temperature Chart
-        const tempCtx = document.getElementById('modalTemperatureChart').getContext('2d');
+        const tempCtx = document
+          .getElementById("modalTemperatureChart")
+          .getContext("2d");
         if (modalTempChartInstance) modalTempChartInstance.destroy();
         modalTempChartInstance = new Chart(tempCtx, {
-          type: 'line',
+          type: "line",
           data: {
-            labels: tempData.map(r => r.timestamp),
-            datasets: [{
-              label: 'Temperature (°C)',
-              data: tempData.map(r => r.temperature),
-              borderColor: 'rgb(220, 38, 38)',
-              backgroundColor: 'rgba(220, 38, 38, 0.1)',
-              fill: true,
-              tension: 0.4
-            }]
+            labels: tempData.map((r) => r.timestamp),
+            datasets: [
+              {
+                label: "Temperature (°C)",
+                data: tempData.map((r) => r.temperature),
+                borderColor: "rgb(220, 38, 38)",
+                backgroundColor: "rgba(220, 38, 38, 0.1)",
+                fill: true,
+                tension: 0.4,
+              },
+            ],
           },
           options: {
             responsive: true,
             plugins: { legend: { display: false } },
             scales: {
               y: { beginAtZero: false, title: { display: true, text: "°C" } },
-              x: { title: { display: true, text: "Date" } }
-            }
-          }
+              x: { title: { display: true, text: "Date" } },
+            },
+          },
         });
 
         // BMI Chart
-        const bmiCtx = document.getElementById('bmiChart').getContext('2d');
+        const bmiCtx = document.getElementById("bmiChart").getContext("2d");
         if (modalBmiChartInstance) modalBmiChartInstance.destroy();
         modalBmiChartInstance = new Chart(bmiCtx, {
-          type: 'line',
+          type: "line",
           data: {
-            labels: bmiData.map(r => r.timestamp),
-            datasets: [{
-              label: 'BMI',
-              data: bmiData.map(r => r.bmi),
-              borderColor: 'skyblue',
-              backgroundColor: 'rgba(135,206,235,0.2)',
-              fill: true,
-              tension: 0.3
-            }]
+            labels: bmiData.map((r) => r.timestamp),
+            datasets: [
+              {
+                label: "BMI",
+                data: bmiData.map((r) => r.bmi),
+                borderColor: "skyblue",
+                backgroundColor: "rgba(135,206,235,0.2)",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
           },
           options: {
             responsive: true,
             plugins: { legend: { display: false } },
             scales: {
               y: { beginAtZero: false, title: { display: true, text: "BMI" } },
-              x: { title: { display: true, text: "Date" } }
-            }
-          }
+              x: { title: { display: true, text: "Date" } },
+            },
+          },
         });
+      }
+      function startMonitoring() {
+        fetch("/api/sensor/start", { method: "POST" })
+          .then((res) => res.json())
+          .then((data) => {
+            alert("✅ " + data.message);
+          })
+          .catch((err) => {
+            console.error("Failed to start monitoring:", err);
+            alert("❌ Could not start monitoring");
+          });
       }
     </script>
   </body>

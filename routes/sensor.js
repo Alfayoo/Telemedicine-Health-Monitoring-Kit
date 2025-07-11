@@ -31,6 +31,18 @@ router.post('/live', (req, res) => {
   res.status(200).json({ message: 'Data received successfully' });
 });
 
+let shouldMonitor = false;
+
+router.post('/start', (req, res) => {
+  shouldMonitor = true;
+  console.log("✅ Monitoring started via frontend");
+  res.status(200).json({ message: "Monitoring has started" });
+});
+
+router.get('/should-start', (req, res) => {
+  res.json({ start: shouldMonitor });
+});
+
 // ✅ GET endpoint to return the latest real data to the frontend
 router.get('/live', (req, res) => {
   if (latestSensorData.temperature === null || latestSensorData.bpm === null) {
