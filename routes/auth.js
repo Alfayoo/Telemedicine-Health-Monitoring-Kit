@@ -58,7 +58,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
+    []
 // Get logged-in user (requires token)
 const authMiddleware = require('../middleware/auth');
 router.get('/me', authMiddleware, async (req, res) => {
