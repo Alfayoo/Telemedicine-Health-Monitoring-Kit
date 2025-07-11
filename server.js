@@ -14,7 +14,6 @@ const healthMetricRoutes = require('./routes/healthMetric'); // Health Metric Ro
 const sensorRoute = require('./routes/sensor');
 
 const app = express();
-
 // --- Database Connection ---
 const connectDB = async () => {
   try {
@@ -32,8 +31,9 @@ const connectDB = async () => {
   }
 };
 
-// Connect to the database
+// ConnecAt to the database
 connectDB();
+app.use(express.static('public'));
 
 // --- Middleware ---
 // THIS IS CRUCIAL: It parses incoming JSON payloads from requests (like from your Arduino)
