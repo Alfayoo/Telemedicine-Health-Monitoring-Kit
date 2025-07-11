@@ -5,7 +5,6 @@
     <title>Patient Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <link
       href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;500&family=Montserrat:wght@600;700&display=swap"
       rel="stylesheet"
@@ -15,16 +14,9 @@
         background-color: rgb(215, 183, 188);
         font-family: "Hind Madurai", sans-serif;
       }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
+      h1, h2, h3, h4, h5, h6 {
         font-family: "Montserrat", sans-serif;
       }
-
       #bgVideo {
         position: fixed;
         top: 0;
@@ -34,7 +26,6 @@
         object-fit: cover;
         z-index: -1;
       }
-
       .logo-img {
         width: 500px;
         height: auto;
@@ -44,7 +35,6 @@
         border-radius: 0;
         object-fit: contain;
       }
-
       .scroll-container {
         height: 1000px;
         overflow-y: auto;
@@ -52,14 +42,12 @@
         perspective: 1200px;
         scroll-behavior: smooth;
       }
-
       .scroll-track {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
       }
-
       .welcome-heading {
         font-size: 40px;
         font-weight: 700;
@@ -67,7 +55,6 @@
         letter-spacing: 0.5px;
         text-align: center;
       }
-
       .card {
         width: 90%;
         max-width: 600px;
@@ -78,18 +65,15 @@
         transition: transform 0.3s, opacity 0.3s, scale 0.3s;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
       }
-
       .card.center {
         transform: scale(1.15);
         z-index: 10;
         opacity: 1;
       }
-
       .card.near {
         transform: scale(0.95);
         opacity: 0.9;
       }
-
       .card.far {
         transform: scale(0.8);
         opacity: 0.5;
@@ -123,7 +107,7 @@
 
         <!-- BUTTONS -->
         <div class="mb-8">
-          <div class="flex gap-4">
+          <div class="flex gap-4 flex-wrap">
             <button
               onclick="toggleModal('infoModal')"
               class="bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-full shadow text-white"
@@ -141,6 +125,12 @@
               class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full shadow text-white"
             >
               Log Out
+            </button>
+            <!-- Start Button (no functionality yet) -->
+            <button
+              class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full shadow text-white"
+            >
+              Start
             </button>
           </div>
         </div>
@@ -167,7 +157,7 @@
 
         <!-- WELCOME -->
         <div class="mt-auto text-white text-center">
-          <h1 class="welcome-heading">Welcome, Jane Doe</h1>
+          <h1 class="welcome-heading">Welcome!!!</h1>
         </div>
       </div>
 
@@ -206,15 +196,88 @@
                 class="w-16 h-16 rounded-full object-cover"
               />
               <div>
-                <h2 class="text-xl font-bold text-sky-600">Jane Doe</h2>
+                <h2 class="text-xl font-bold text-sky-600">Laura Shavia</h2>
                 <p class="text-sm text-gray-700">
-                  Patient ID: P102938 • Age: 28
+                  Patient ID:001 • Age:20
                 </p>
               </div>
             </div>
-
-            <!-- Duplicates -->
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODALS -->
+    <div
+      id="infoModal"
+      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4">Patient Information</h2>
+        <ul class="space-y-2 text-sm">
+          <li><strong>Full Name:</strong> John Doe</li>
+          <li><strong>Email:</strong> johndoe@example.com</li>
+          <li><strong>County:</strong> Nairobi</li>
+          <li><strong>Constituency:</strong> Westlands</li>
+          <li><strong>Age:</strong> 30</li>
+          <li><strong>Gender:</strong> Male</li>
+        </ul>
+        <div class="text-right mt-6">
+          <button
+            onclick="toggleModal('infoModal')"
+            class="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="messageModal"
+      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4">Upcoming Appointments</h2>
+        <ul class="space-y-2 text-sm">
+          <li>✔ <strong>July 14, 2025</strong> – Dr. Janet Kimani @ 9:00 AM</li>
+          <li>
+            ✔ <strong>August 2, 2025</strong> – Dr. Joseph Otieno @ 11:00 AM
+          </li>
+        </ul>
+        <div class="text-right mt-6">
+          <button
+            onclick="toggleModal('messageModal')"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW MODAL FOR GRAPHS -->
+    <div
+      id="graphModal"
+      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-2xl">
+        <h2 class="text-xl font-bold mb-4 text-center">Temperature & BMI Graphs</h2>
+        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+          <div>
+            <canvas id="modalTemperatureChart" width="300" height="200"></canvas>
+          </div>
+          <div>
+            <canvas id="bmiChart" width="300" height="200"></canvas>
+          </div>
+        </div>
+        <div class="text-right mt-6">
+          <button
+            onclick="toggleModal('graphModal')"
+            class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -226,15 +289,8 @@
       // Clone only visual cards, skip ones with IDs entirely
       const originalCards = [...track.children];
       originalCards.forEach((card, i) => {
-        // Clone the card
         const clone = card.cloneNode(true);
-
-        // Remove all IDs from elements in the clone to prevent conflicts
-        clone
-          .querySelectorAll("[id]")
-          .forEach((el) => el.removeAttribute("id"));
-
-        // Append the cleaned clone to the track
+        clone.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
         track.appendChild(clone);
       });
 
@@ -265,6 +321,9 @@
         const modal = document.getElementById(id);
         modal.classList.toggle("hidden");
         modal.classList.toggle("flex");
+        if (id === "graphModal" && !modal.classList.contains("hidden")) {
+          renderModalCharts();
+        }
       }
 
       function logout() {
@@ -275,8 +334,6 @@
         scrollInterval = setInterval(() => {
           if (!userScrolling) {
             container.scrollTop += 1;
-
-            // If we reached the bottom, scroll back to the top
             if (
               container.scrollTop + container.clientHeight >=
               container.scrollHeight
@@ -304,7 +361,6 @@
       startAutoScroll();
 
       // --- CHART SETUP ---
-
       const ctxHeart = document
         .getElementById("heartRateChart")
         .getContext("2d");
@@ -408,7 +464,6 @@
             temperatureChart.update();
 
             // --- Update ALL heart rate cards ---
-            // --- Update ALL heart rate cards ---
             document.querySelectorAll(".currentBpm").forEach((el) => {
               el.textContent = `${data.bpm} bpm`;
             });
@@ -443,55 +498,80 @@
           })
           .catch((err) => console.error("Error fetching dummy data:", err));
       }, 1000);
+
+      // --- MODAL GRAPHS ---
+      // Dummy data for BMI and temperature history
+      const bmiData = [
+        { timestamp: "2025-07-01", bmi: 22.1 },
+        { timestamp: "2025-07-02", bmi: 22.3 },
+        { timestamp: "2025-07-03", bmi: 22.2 },
+        { timestamp: "2025-07-04", bmi: 22.4 },
+        { timestamp: "2025-07-05", bmi: 22.5 }
+      ];
+      const tempData = [
+        { timestamp: "2025-07-01", temperature: 36.7 },
+        { timestamp: "2025-07-02", temperature: 36.8 },
+        { timestamp: "2025-07-03", temperature: 37.0 },
+        { timestamp: "2025-07-04", temperature: 36.9 },
+        { timestamp: "2025-07-05", temperature: 37.1 }
+      ];
+
+      let modalTempChartInstance = null;
+      let modalBmiChartInstance = null;
+
+      function renderModalCharts() {
+        // Temperature Chart
+        const tempCtx = document.getElementById('modalTemperatureChart').getContext('2d');
+        if (modalTempChartInstance) modalTempChartInstance.destroy();
+        modalTempChartInstance = new Chart(tempCtx, {
+          type: 'line',
+          data: {
+            labels: tempData.map(r => r.timestamp),
+            datasets: [{
+              label: 'Temperature (°C)',
+              data: tempData.map(r => r.temperature),
+              borderColor: 'rgb(220, 38, 38)',
+              backgroundColor: 'rgba(220, 38, 38, 0.1)',
+              fill: true,
+              tension: 0.4
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: false, title: { display: true, text: "°C" } },
+              x: { title: { display: true, text: "Date" } }
+            }
+          }
+        });
+
+        // BMI Chart
+        const bmiCtx = document.getElementById('bmiChart').getContext('2d');
+        if (modalBmiChartInstance) modalBmiChartInstance.destroy();
+        modalBmiChartInstance = new Chart(bmiCtx, {
+          type: 'line',
+          data: {
+            labels: bmiData.map(r => r.timestamp),
+            datasets: [{
+              label: 'BMI',
+              data: bmiData.map(r => r.bmi),
+              borderColor: 'skyblue',
+              backgroundColor: 'rgba(135,206,235,0.2)',
+              fill: true,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: false, title: { display: true, text: "BMI" } },
+              x: { title: { display: true, text: "Date" } }
+            }
+          }
+        });
+      }
     </script>
-
-    <!-- MODALS -->
-    <div
-      id="infoModal"
-      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
-    >
-      <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4">Patient Information</h2>
-        <ul class="space-y-2 text-sm">
-          <li><strong>Full Name:</strong> John Doe</li>
-          <li><strong>Email:</strong> johndoe@example.com</li>
-          <li><strong>County:</strong> Nairobi</li>
-          <li><strong>Constituency:</strong> Westlands</li>
-          <li><strong>Age:</strong> 30</li>
-          <li><strong>Gender:</strong> Male</li>
-        </ul>
-        <div class="text-right mt-6">
-          <button
-            onclick="toggleModal('infoModal')"
-            class="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div
-      id="messageModal"
-      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
-    >
-      <div class="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4">Upcoming Appointments</h2>
-        <ul class="space-y-2 text-sm">
-          <li>✔ <strong>July 14, 2025</strong> – Dr. Janet Kimani @ 9:00 AM</li>
-          <li>
-            ✔ <strong>August 2, 2025</strong> – Dr. Joseph Otieno @ 11:00 AM
-          </li>
-        </ul>
-        <div class="text-right mt-6">
-          <button
-            onclick="toggleModal('messageModal')"
-            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
   </body>
 </html>
