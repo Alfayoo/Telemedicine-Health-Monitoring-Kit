@@ -491,7 +491,7 @@
 
             // --- Update ALL heart rate cards ---
             document.querySelectorAll(".currentBpm").forEach((el) => {
-              el.textContent = '${data.bpm} bpm';
+              el.textContent = `${data.bpm} bpm`;
             });
 
             const bpmStatus =
@@ -506,7 +506,7 @@
 
             // --- Update ALL temperature cards ---
             document.querySelectorAll(".currentTemp").forEach((el) => {
-              el.textContent = '${data.temperature.toFixed(1)}°C';
+              el.textContent = `${data.temperature.toFixed(1)}°C`;
             });
 
             const tempStatus =
